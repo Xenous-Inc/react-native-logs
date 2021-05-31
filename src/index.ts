@@ -101,7 +101,7 @@ const defaultLogger = {
   printLevel: true,
   printDate: true,
   enabled: true,
-  enabledExtensions: null,
+  enabledExtensions: [] as const,
 };
 
 /** Logger Main Class */
@@ -454,8 +454,29 @@ class logTyped extends logs {
  * all subsequent levels to the one selected will be exposed (ordered by severity asc)
  * through the transport
  */
-const createLogger = (config?: configLoggerType) => {
-  return new logTyped(config);
+const createLogger = <L = typeof defaultLogger.levels, E extends string = typeof defaultLogger.enabledExtensions[number]>(config: any = defaultLogger):
+  logTyped &
+  { [lvl in keyof L]: (...msgs: any) => void; } &
+  { [ext in E]: logTyped & { [lvl in keyof L]: (...msgs: any) => void; }; } => {
+  
+  type leveledLogTyped = logTyped & { [lvl in keyof L]: (...msgs: any) => void; };
+  type extendedLeveledLogTyped = leveledLogTyped & { [ext in E]: leveledLogTyped; };
+  
+  const log = new logTyped({
+    ...config,
+    enabledExtensions:
+        (config.enabledExtensions && config.enabledExtensions.length > 0)
+            ? config.enabledExtensions.map((ext: string) => ext.toUpperCase())
+            : []
+  })
+  
+  if(config.enabledExtensions && config.enabledExtensions.length > 0) {
+    config.enabledExtensions.forEach((ext: string) => {
+      log[ext] = log.extend(ext.toUpperCase()) as leveledLogTyped;
+    });
+  }
+  
+  return log as extendedLeveledLogTyped;
 };
 
 const logger = { createLogger };

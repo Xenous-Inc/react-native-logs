@@ -1,6 +1,6 @@
 {
-  "name": "react-native-logs",
-  "version": "3.0.3",
+  "name": "xenous-logs",
+  "version": "1.0.0",
   "description": "Performance-aware simple logger for React-Native with namespaces, custom levels and custom transports (colored console, file writing, etc.)",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/onubo/react-native-logs.git"
+    "url": "git+https://github.com/xenous-inc/xenous-logger.git"
   },
   "keywords": [
     "log",
@@ -27,12 +27,12 @@
     "debug",
     "namespace"
   ],
-  "author": "Alessandro Bottamedi - a.bottamedi@me.com",
+  "author": "x3noku",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/onubo/react-native-logs/issues"
+    "url": "https://github.com/xenous-inc/xenous-logger/issues"
   },
-  "homepage": "https://github.com/onubo/react-native-logs#readme",
+  "homepage": "https://github.com/xenous-inc/xenous-logger#readme",
   "devDependencies": {
     "jest": "^26.6.3",
     "typescript": "^4.1.5"
